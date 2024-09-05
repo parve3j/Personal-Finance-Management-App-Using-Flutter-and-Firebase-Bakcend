@@ -1,9 +1,8 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../const/app_colors.dart';
-import '../../controller/auth.dart';
+import '../../controller/auth_controller.dart';
 import '../../routes/routes.dart';
 import '../../utils/responsive/size_config.dart';
 import '../../widgets/custom_button.dart';
@@ -54,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                       customFormField(TextInputType.text, _passwordController,
                           context, 'Password', (val) {
                             if (val.isEmpty) {
-                              return 'this field can\'t be empty';
+                              return 'This field can\'t be empty';
                             }
                           },
                           prefixIcon: Icons.remove_red_eye_outlined,
@@ -84,8 +83,6 @@ class LoginScreen extends StatelessWidget {
                                         _emailController.text.trim(),
                                         _passwordController.text.trim(),
                                         context);
-                                  } else {
-                                    print('failed');
                                   }
                                 },
                           )),
@@ -105,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                                 ..onTap = () => Get.toNamed(registration),
                               text: ' Sign Up',
                               style: const TextStyle(
-                                  color: Colors.black, fontWeight: FontWeight.w600)),
+                                  color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
                         ])),
                       )
                     ],

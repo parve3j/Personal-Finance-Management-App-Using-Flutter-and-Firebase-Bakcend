@@ -14,9 +14,10 @@ Widget customFormField(
   return Padding(
     padding: const EdgeInsets.only(bottom: 10),
     child: TextFormField(
+      cursorColor: AppColors.mandarinColor,
       keyboardType: keyboardtype,
       readOnly: readOnly,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
       ),
@@ -35,7 +36,7 @@ Widget customFormField(
           child: Container(
             width: 40,
             decoration: BoxDecoration(
-              color: Color(0xFFFDF2EE),
+              color: const Color(0xFFFDF2EE),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
@@ -49,13 +50,13 @@ Widget customFormField(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide.none),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent),
+          borderSide: const BorderSide(color: Colors.transparent),
           borderRadius: BorderRadius.circular(8),
         ),
         fillColor: Colors.white,
         filled: true,
         hintText: hinttext,
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w400,
         ),

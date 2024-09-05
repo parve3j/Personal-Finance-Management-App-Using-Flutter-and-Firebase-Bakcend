@@ -20,16 +20,16 @@ class AppStyles {
   GetSnackBar failedSnacBar(message)=> GetSnackBar(
     message: message,
     backgroundColor: Colors.redAccent,
-    duration: Duration(seconds: 3),
-    icon: Icon(Icons.warning),
+    duration: const Duration(seconds: 3),
+    icon: const Icon(Icons.warning, color: Colors.white,),
     snackPosition: SnackPosition.TOP,
   );
 
   GetSnackBar successSnacBar(message)=> GetSnackBar(
     message: message,
     backgroundColor: Colors.greenAccent,
-    duration: Duration(seconds: 3),
-    icon: Icon(Icons.done),
+    duration: const Duration(seconds: 3),
+    icon: const Icon(Icons.done, color: Colors.white,),
     snackPosition: SnackPosition.TOP,
   );
 

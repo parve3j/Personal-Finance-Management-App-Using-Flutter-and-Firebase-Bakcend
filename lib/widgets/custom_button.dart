@@ -11,10 +11,10 @@ Widget customButton(String title, onPressed) {
         borderRadius: BorderRadius.circular(20)),
       backgroundColor: AppColors.mandarinColor,
       foregroundColor: Colors.white,
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
         fontSize: 16,
       ),
-      padding: EdgeInsets.symmetric(horizontal: 30)
+      padding: const EdgeInsets.symmetric(horizontal: 30)
     ),
   );
 }

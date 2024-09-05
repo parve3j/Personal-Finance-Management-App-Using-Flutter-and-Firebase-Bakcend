@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:personal_finance_management_app/const/app_colors.dart';
 
-import '../../controller/income.dart';
+import '../../controller/income_controller.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_fields.dart';
 
@@ -51,21 +51,19 @@ class AddIncomeScreen extends StatelessWidget {
               prefixIcon:Icons.description
             ),
             const SizedBox(height: 20),
-            customButton(
-              'Add Income',(){
+            customButton('Add Income', () {
               double amount = double.parse(amountController.text);
               String source = sourceController.text;
               String description = descriptionController.text;
 
-              if (amount > 0 && source.isNotEmpty && description.isNotEmpty) {
+              if (amount > 0 && source.isNotEmpty && description.isNotEmpty && amountController.text.isNotEmpty) {
                 incomeController.addIncome(amount, source, description);
                 Get.back();
                 Get.snackbar('Success', 'Income added successfully!');
               } else {
-                Get.snackbar('Error', 'Please enter valid details');
+                Get.snackbar('Error', 'Field can\'t be empty');
               }
-            }
-            )
+            })
           ],
         ),
       ),

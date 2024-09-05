@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controller/auth.dart';
+import '../../controller/auth_controller.dart';
 import '../../utils/responsive/size_config.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_fields.dart';

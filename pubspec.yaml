@@ -42,8 +42,8 @@ dependencies:
   get_storage:
   gap:
   intl:
-  gusto_neumorphic:
-  hugeicons:
+  fl_chart:
+
 
 
 dev_dependencies:

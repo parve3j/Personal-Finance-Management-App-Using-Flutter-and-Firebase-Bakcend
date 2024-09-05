@@ -1,51 +1,9 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-//
-// import '../../controller/income.dart';
-//
-// class ViewIncomesScreen extends StatelessWidget {
-//   final IncomeController incomeController = Get.find();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Incomes'),
-//       ),
-//       body: Obx(() {
-//         if (incomeController.incomes.isEmpty) {
-//           return Center(child: Text('No incomes added yet'));
-//         } else {
-//           return ListView.builder(
-//             itemCount: incomeController.incomes.length,
-//             itemBuilder: (context, index) {
-//               final income = incomeController.incomes[index];
-//               return ListTile(
-//                 title: Text(income.source),
-//                 subtitle: Text(
-//                   'Amount: \$${income.amount.toStringAsFixed(2)}\nDate: ${income.date.toLocal()}',
-//                 ),
-//                 trailing: IconButton(
-//                   icon: Icon(Icons.delete),
-//                   onPressed: () {
-//                     incomeController.deleteIncome(income.id);
-//                   },
-//                 ),
-//               );
-//             },
-//           );
-//         }
-//       }),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_finance_management_app/const/app_colors.dart';
 
-import '../../controller/income.dart';
+import '../../controller/income_controller.dart';
 
 class ViewIncomesScreen extends StatelessWidget {
   final IncomeController incomeController = Get.find();
@@ -71,7 +29,6 @@ class ViewIncomesScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10.0, right: 10, top: 4),
                 child: InkWell(
                   onTap: () {
-                    // Optionally, handle tap for more details
                     Get.snackbar(
                       'Income Details',
                       'Source: ${income.source}\nAmount: \$${income.amount.toStringAsFixed(2)}\nDate: ${DateFormat('yyyy-MM-dd – kk:mm').format(income.date)}',
@@ -92,6 +49,7 @@ class ViewIncomesScreen extends StatelessWidget {
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,6 +57,7 @@ class ViewIncomesScreen extends StatelessWidget {
                           Text(
                             'Amount: \$${income.amount.toStringAsFixed(2)}',
                             style: const TextStyle(fontSize: 16),
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 4),
                           Text(

@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -145,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.17.5"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      sha256: "94307bef3a324a0d329d3ab77b2f0c6e5ed739185ffc029ed28c0f9b019ea7ef"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.69.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -192,14 +208,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  gusto_neumorphic:
-    dependency: "direct main"
-    description:
-      name: gusto_neumorphic
-      sha256: "1ec4c6f18a6f3bcbb0317c8dc502c7f819bb749169bd7ecad47a6eb1621b3880"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.0"
   http_parser:
     dependency: transitive
     description:
@@ -208,22 +216,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  hugeicons:
-    dependency: "direct main"
-    description:
-      name: hugeicons
-      sha256: b5cf08183a75b7774ca6d601a2ef025ed26550e4fca9d956673ffda91e132411
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.7"
   intl:
     dependency: "direct main"
     description:
       name: intl
-      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
       url: "https://pub.dev"
     source: hosted
-    version: "0.19.0"
+    version: "0.17.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -446,5 +446,5 @@ packages:
     source: hosted
     version: "1.0.4"
 sdks:
-  dart: ">=3.4.3 <4.0.0"
+  dart: ">=3.3.3 <4.0.0"
   flutter: ">=3.18.0-18.0.pre.54"

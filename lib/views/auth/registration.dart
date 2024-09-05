@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:personal_finance_management_app/routes/routes.dart';
 import '../../const/app_colors.dart';
-import '../../controller/auth.dart';
+import '../../controller/auth_controller.dart';
 import '../../utils/responsive/size_config.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_fields.dart';
@@ -88,18 +88,24 @@ class Registration extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Text.rich(TextSpan(children: [
-                    const TextSpan(
-                        text: 'Already have an account?',
-                        style: TextStyle(color: AppColors.grayColor)),
-                    TextSpan(
-                        recognizer: TapGestureRecognizer()..onTap = () {
-                          Get.back();
-                        },
-                        text: ' Login',
-                        style: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w600)),
-                  ]))
+                  GestureDetector(
+                    onTap: (){
+                      Get.toNamed(loginscreen);
+                    },
+                    child: Text.rich(TextSpan(children: [
+                      const TextSpan(
+                          text: 'Already have an account?',
+                          style: TextStyle(color: AppColors.grayColor)),
+                      TextSpan(
+                          recognizer: TapGestureRecognizer()..onTap = () {
+                            Get.back();
+                          },
+                          text: ' Login',
+                          style: const TextStyle(
+                            fontSize: 16,
+                              color: Colors.black, fontWeight: FontWeight.w600)),
+                    ])),
+                  )
                 ],
               ),
             ),
