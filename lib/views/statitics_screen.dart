@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 import '../controller/expense.dart';
 import '../controller/income.dart';
@@ -38,31 +36,31 @@ class StatisticsScreen extends StatelessWidget {
               Text('Income vs Expenses',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               SizedBox(height: 20),
-              SizedBox(height: 200, // Adjust height as needed
-                child: PieChart(
-                  PieChartData(
-                    sections: [
-                      PieChartSectionData(
-                        color: Colors.green,
-                        value: totalIncome,
-                        title: 'Income',
-                        radius: 50,
-                        titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      PieChartSectionData(
-                        color: Colors.red,
-                        value: totalExpenses,
-                        title: 'Expenses',
-                        radius: 50,
-                        titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                    ],
-                    centerSpaceRadius: 50,
-                    borderData: FlBorderData(show: false),
-                    sectionsSpace: 2,
-                  ),
-                ),
-              ),
+              // SizedBox(height: 200, // Adjust height as needed
+              //   child: PieChart(
+              //     PieChartData(
+              //       sections: [
+              //         PieChartSectionData(
+              //           color: Colors.green,
+              //           value: totalIncome,
+              //           title: 'Income',
+              //           radius: 50,
+              //           titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+              //         ),
+              //         PieChartSectionData(
+              //           color: Colors.red,
+              //           value: totalExpenses,
+              //           title: 'Expenses',
+              //           radius: 50,
+              //           titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+              //         ),
+              //       ],
+              //       centerSpaceRadius: 50,
+              //       borderData: FlBorderData(show: false),
+              //       sectionsSpace: 2,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         );

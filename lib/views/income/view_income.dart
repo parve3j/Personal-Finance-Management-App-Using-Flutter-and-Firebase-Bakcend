@@ -43,6 +43,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_finance_management_app/const/app_colors.dart';
 
 import '../../controller/income.dart';
 
@@ -52,12 +53,15 @@ class ViewIncomesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        title: Text('Incomes'),
+        title: const Text('Incomes'),
+        backgroundColor: AppColors.mandarinColor,
+        foregroundColor: Colors.white,
       ),
       body: Obx(() {
         if (incomeController.incomes.isEmpty) {
-          return Center(child: Text('No incomes added yet'));
+          return const Center(child: Text('No incomes added yet'));
         } else {
           return ListView.builder(
             itemCount: incomeController.incomes.length,
@@ -72,7 +76,7 @@ class ViewIncomesScreen extends StatelessWidget {
                       'Income Details',
                       'Source: ${income.source}\nAmount: \$${income.amount.toStringAsFixed(2)}\nDate: ${DateFormat('yyyy-MM-dd – kk:mm').format(income.date)}',
                       snackPosition: SnackPosition.BOTTOM,
-                      duration: Duration(seconds: 3),
+                      duration: const Duration(seconds: 3),
                     );
                   },
                   child: Card(
@@ -81,10 +85,10 @@ class ViewIncomesScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.all(16),
+                      contentPadding: const EdgeInsets.all(16),
                       title: Text(
                         income.source,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -94,17 +98,23 @@ class ViewIncomesScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Amount: \$${income.amount.toStringAsFixed(2)}',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Description: ${income.description}',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 4),
                           Text(
                             'Date: ${DateFormat('yyyy-MM-dd – kk:mm').format(income.date)}',
-                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                            style: const TextStyle(fontSize: 14, color: Colors.grey),
                           ),
                         ],
                       ),
                       trailing: IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
+                        icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
                           incomeController.deleteIncome(income.id);
                         },

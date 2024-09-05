@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:personal_finance_management_app/routes/routes.dart';
-
 import '../controller/auth.dart';
 import '../controller/expense.dart';
 import '../controller/income.dart';
-
+import '../widgets/balance_display.dart';
+import '../widgets/custom_build_actionbutton.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,9 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final AuthController authController = Get.find();
-
   final IncomeController incomeController = Get.find();
-
   final ExpenseController expenseController = Get.find();
 
   @override
@@ -30,84 +28,108 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Finance Management'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              authController.logout();
-            },
-          ),
-        ],
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Finance Management',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22.0,
+                color: Colors.white,
+              ),
+            ),
+            Tooltip(
+              message: 'Logout',
+              child: IconButton(
+                icon: const Icon(Icons.logout, color: Colors.white),
+                onPressed: () async {
+                  await authController.logout();
+                  Get.toNamed(login);
+                  Get.snackbar(
+                    'Logged out',
+                    'You have successfully logged out.',
+                    snackPosition: SnackPosition.TOP,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.teal,
+        elevation: 5.0,
       ),
+
       body: Obx(() {
-        double totalIncome = incomeController.incomes.fold(
-            0, (sum, income) => sum + income.amount);
-        double totalExpenses = expenseController.expenses.fold(
-            0, (sum, expense) => sum + expense.amount);
+        double totalIncome = incomeController.incomes.fold(0, (sum, income) => sum + income.amount);
+        double totalExpenses = expenseController.expenses.fold(0, (sum, expense) => sum + expense.amount);
         double netBalance = totalIncome - totalExpenses;
 
         return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Display Balance
-              Text(
-                'Current Balance: \$${netBalance.toStringAsFixed(2)}',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BalanceDisplay(netBalance: netBalance),
+                  const SizedBox(height: 20),
+                  customBuildButton(
+                    label: 'Add Expense',
+                    icon: Icons.add_circle,
+                    color: Colors.redAccent,
+                    onPressed: () {
+                      Get.toNamed(addexpenses);
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  customBuildButton(
+                    label: 'Add Income',
+                    icon: Icons.add_circle_outline,
+                    color: Colors.green,
+                    onPressed: () {
+                      Get.toNamed(addincome);
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  customBuildButton(
+                    label: 'View Expenses',
+                    icon: Icons.receipt_long,
+                    color: Colors.orange,
+                    onPressed: () {
+                      Get.toNamed(viewexpenses);
+                    },
+                  ),
+                  const SizedBox(height: 10),
 
-              // Add Expense Button
-              ElevatedButton(
-                onPressed: () {
-                  Get.toNamed(addexpenses);
-                },
-                child: Text('Add Expense'),
-              ),
-              SizedBox(height: 10),
+                  customBuildButton(
+                    label: 'View Incomes',
+                    icon: Icons.account_balance_wallet,
+                    color: Colors.blueAccent,
+                    onPressed: () {
+                      Get.toNamed(viewincome);
+                    },
+                  ),
+                  const SizedBox(height: 10),
 
-              // Add Income Button
-              ElevatedButton(
-                onPressed: () {
-                  Get.toNamed(addincome);
-                },
-                child: Text('Add Income'),
+                  customBuildButton(
+                    label: 'View Statistics',
+                    icon: Icons.bar_chart,
+                    color: Colors.purple,
+                    onPressed: () {
+                      Get.toNamed(statistics);
+                    },
+                  ),
+                ],
               ),
-              SizedBox(height: 10),
-
-              // View Expenses Button
-              ElevatedButton(
-                onPressed: () {
-                  Get.toNamed(viewexpenses);
-                },
-                child: Text('View Expenses'),
-              ),
-              SizedBox(height: 10),
-
-              // View Incomes Button
-              ElevatedButton(
-                onPressed: () {
-                  Get.toNamed(viewincome);
-                },
-                child: Text('View Incomes'),
-              ),
-              SizedBox(height: 10),
-
-              // View Statistics Button
-              ElevatedButton(
-                onPressed: () {
-                  Get.toNamed(statistics);
-                },
-                child: Text('View Statistics'),
-              ),
-            ],
+            ),
           ),
         );
       }),
     );
   }
+
+  // A reusable method to build action buttons with consistent design
+
 }

@@ -45,10 +45,10 @@ class LoginScreen extends StatelessWidget {
                       customFormField(TextInputType.emailAddress, _emailController,
                           context, 'Email', (value) {
                             if (value.isEmpty) {
-                              return 'this field can\'t be empty';
+                              return 'This field can\'t be empty';
                             }
                             if (!value.contains(RegExp(r'\@'))) {
-                              return 'enter a valid email address';
+                              return 'Enter a valid email address';
                             }
                           }, prefixIcon: Icons.email_outlined),
                       customFormField(TextInputType.text, _passwordController,
@@ -92,17 +92,22 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 30,
                       ),
-                      Text.rich(TextSpan(children: [
-                        const TextSpan(
-                            text: 'Don\'t have an account?',
-                            style: TextStyle(color: AppColors.grayColor)),
-                        TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => Get.toNamed(registration),
-                            text: ' Sign Up',
-                            style: const TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.w600)),
-                      ]))
+                      GestureDetector(
+                        onTap: (){
+                          Get.toNamed(registration);
+                        },
+                        child: Text.rich(TextSpan(children: [
+                          const TextSpan(
+                              text: 'Don\'t have an account?',
+                              style: TextStyle(color: AppColors.grayColor)),
+                          TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Get.toNamed(registration),
+                              text: ' Sign Up',
+                              style: const TextStyle(
+                                  color: Colors.black, fontWeight: FontWeight.w600)),
+                        ])),
+                      )
                     ],
                   ),
                 ),

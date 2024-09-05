@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:personal_finance_management_app/routes/routes.dart';
 import '../../const/app_colors.dart';
 import '../../controller/auth.dart';
 import '../../utils/responsive/size_config.dart';
@@ -92,7 +93,9 @@ class Registration extends StatelessWidget {
                         text: 'Already have an account?',
                         style: TextStyle(color: AppColors.grayColor)),
                     TextSpan(
-                        recognizer: TapGestureRecognizer()..onTap = () {},
+                        recognizer: TapGestureRecognizer()..onTap = () {
+                          Get.back();
+                        },
                         text: ' Login',
                         style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.w600)),

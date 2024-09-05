@@ -40,9 +40,10 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   get_storage:
-  fl_chart:
   gap:
   intl:
+  gusto_neumorphic:
+  hugeicons:
 
 
 dev_dependencies:
