@@ -1,0 +1,171 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:personal_finance_management_app/controller/expense.dart';
+import 'package:personal_finance_management_app/controller/income.dart';
+import 'package:personal_finance_management_app/routes/routes.dart';
+
+import '../utils/style/app_style.dart';
+
+class AuthController extends GetxController {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  final box = GetStorage();
+
+  signUp(name, email, password, context) async {
+    AppStyles().progressDialog(context);
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      if (credential.user!.uid.isNotEmpty) {
+        CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection('users');
+        await collectionReference
+            .doc(email)
+            .set({'uid': credential.user!.uid, 'email': email, 'name': name});
+
+        Map user = {'uid': credential.user!.uid, 'email': email, 'name': name};
+        box.write('user', user);
+        print(box.read('user'));
+        Get.back(); // Close the progress dialog
+        Get.offAndToNamed(homescreen);
+        Get.showSnackbar(AppStyles().successSnacBar('SignUp successful'));
+      }
+    } on FirebaseAuthException catch (e) {
+      Get.back(); // Close the progress dialog
+      if (e.code == 'weak-password') {
+        Get.showSnackbar(
+            AppStyles().failedSnacBar('The password provided is too weak.'));
+      } else if (e.code == 'email-already-in-use') {
+        Get.showSnackbar(AppStyles()
+            .failedSnacBar('The account already exists for that email.'));
+      } else {
+        Get.showSnackbar(AppStyles().failedSnacBar(e.message ?? 'Unknown error'));
+      }
+    } catch (e) {
+      Get.back(); // Close the progress dialog
+      Get.showSnackbar(AppStyles().failedSnacBar(e.toString()));
+    }
+  }
+
+  login(email, password, context) async {
+    AppStyles().progressDialog(context);
+    try {
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      if (credential.user!.uid.isNotEmpty) {
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(email)
+            .get()
+            .then((DocumentSnapshot<Map<String, dynamic>> doc) {
+          if (doc.exists) {
+            var data = doc.data();
+            print(data);
+            Map user = {
+              'uid': data!['uid'],
+              'email': data['email'],
+              'name': data['name']
+            };
+            box.write('user', user);
+            print(user);
+            Get.back(); // Close the progress dialog
+            Get.offAndToNamed(homescreen);
+            Get.showSnackbar(AppStyles().successSnacBar('Login successful'));
+          } else {
+            Get.back(); // Close the progress dialog
+            Get.showSnackbar(AppStyles()
+                .failedSnacBar('Document does not exist in the database.'));
+          }
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      Get.back(); // Close the progress dialog
+      if (e.code == 'user-not-found') {
+        Get.showSnackbar(
+            AppStyles().failedSnacBar('No user found for that email.'));
+      } else if (e.code == 'wrong-password') {
+        Get.showSnackbar(AppStyles()
+            .failedSnacBar('Wrong password provided for that user.'));
+      } else {
+        Get.showSnackbar(AppStyles().failedSnacBar(e.message ?? 'Unknown error'));
+      }
+    } catch (e) {
+      Get.back(); // Close the progress dialog
+      Get.showSnackbar(AppStyles().failedSnacBar(e.toString()));
+    }
+  }
+
+  // login(email, password, context) async {
+  //   AppStyles().progressDialog(context);
+  //   try {
+  //     final credential = await FirebaseAuth.instance
+  //         .signInWithEmailAndPassword(email: email, password: password);
+  //     if (credential.user!.uid.isNotEmpty) {
+  //       FirebaseFirestore.instance
+  //           .collection('users')
+  //           .doc(email)
+  //           .get()
+  //           .then((DocumentSnapshot<Map<String, dynamic>> doc) {
+  //         if (doc.exists) {
+  //           var data = doc.data();
+  //           print(data);
+  //           Map user = {
+  //             'uid': data!['uid'],
+  //             'email': data['email'],
+  //             'name': data['name']
+  //           };
+  //           box.write('user', user);
+  //           print(user);
+  //
+  //           // Load expenses and incomes after successful login
+  //           Get.find<ExpenseController>().loadExpenses();
+  //           Get.find<IncomeController>().loadIncomes();
+  //
+  //           Get.back(); // Close the progress dialog
+  //           Get.offAndToNamed(homescreen);
+  //           Get.showSnackbar(AppStyles().successSnacBar('Login successful'));
+  //         } else {
+  //           Get.back(); // Close the progress dialog
+  //           Get.showSnackbar(AppStyles()
+  //               .failedSnacBar('Document does not exist in the database.'));
+  //         }
+  //       });
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     Get.back(); // Close the progress dialog
+  //     if (e.code == 'user-not-found') {
+  //       Get.showSnackbar(
+  //           AppStyles().failedSnacBar('No user found for that email.'));
+  //     } else if (e.code == 'wrong-password') {
+  //       Get.showSnackbar(AppStyles()
+  //           .failedSnacBar('Wrong password provided for that user.'));
+  //     } else {
+  //       Get.showSnackbar(AppStyles().failedSnacBar(e.message ?? 'Unknown error'));
+  //     }
+  //   } catch (e) {
+  //     Get.back(); // Close the progress dialog
+  //     Get.showSnackbar(AppStyles().failedSnacBar(e.toString()));
+  //   }
+  // }
+
+
+  forgetPassword(email, context) async {
+    AppStyles().progressDialog(context);
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      Get.back(); // Close the progress dialog
+      Get.showSnackbar(
+          AppStyles().successSnacBar('Email has been sent to $email'));
+    } catch (e) {
+      Get.back(); // Close the progress dialog
+      Get.showSnackbar(AppStyles().failedSnacBar('Something is wrong.'));
+    }
+  }
+
+  logout() async {
+    await _auth.signOut();
+  }
+}

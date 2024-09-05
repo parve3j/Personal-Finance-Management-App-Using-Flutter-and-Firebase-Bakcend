@@ -1,0 +1,20 @@
+import 'package:flutter/material.dart';
+
+import '../../const/app_colors.dart';
+
+Widget customButton(String title, onPressed) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    child: Text(title),
+    style: ElevatedButton.styleFrom(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20)),
+      backgroundColor: AppColors.mandarinColor,
+      foregroundColor: Colors.white,
+      textStyle: TextStyle(
+        fontSize: 16,
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 30)
+    ),
+  );
+}
