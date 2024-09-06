@@ -14,6 +14,7 @@ class Registration extends StatelessWidget {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  AuthController _authController = Get.find();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -57,14 +58,22 @@ class Registration extends StatelessWidget {
                       return 'enter a valid email address';
                     }
                   }, prefixIcon: Icons.email_outlined),
-                  customFormField(TextInputType.text, _passwordController,
-                      context, 'Password', (val) {
-                    if (val.isEmpty) {
-                      return 'Set password at least 6 charaters';
-                    }
-                  },
-                      prefixIcon: Icons.remove_red_eye_outlined,
-                      obscureText: true),
+                  Obx(() => customFormField(
+                        TextInputType.text,
+                        _passwordController,
+                        context,
+                        'Password',
+                        (val) {
+                          if (val!.isEmpty) {
+                            return 'This field can\'t be empty';
+                          }
+                          return null;
+                        },
+                        prefixIcon: Icons.lock_outline,
+                        isObscure: _authController.obscureText,
+                        count: 1,
+                        onSuffixIconPressed: _authController.toggleObscureText,
+                      )),
                   const SizedBox(
                     height: 30,
                   ),
@@ -89,7 +98,7 @@ class Registration extends StatelessWidget {
                     height: 20,
                   ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Get.toNamed(loginscreen);
                     },
                     child: Text.rich(TextSpan(children: [
@@ -97,13 +106,15 @@ class Registration extends StatelessWidget {
                           text: 'Already have an account?',
                           style: TextStyle(color: AppColors.grayColor)),
                       TextSpan(
-                          recognizer: TapGestureRecognizer()..onTap = () {
-                            Get.back();
-                          },
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Get.back();
+                            },
                           text: ' Login',
                           style: const TextStyle(
-                            fontSize: 16,
-                              color: Colors.black, fontWeight: FontWeight.w600)),
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600)),
                     ])),
                   )
                 ],

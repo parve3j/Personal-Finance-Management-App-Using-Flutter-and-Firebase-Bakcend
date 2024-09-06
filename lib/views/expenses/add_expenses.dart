@@ -45,7 +45,7 @@ class AddExpenseScreen extends StatelessWidget {
               double amount = double.parse(amountController.text);
               String description = descriptionController.text;
 
-              if (amount > 0 && amountController.text.isNotEmpty && description.isNotEmpty) {
+              if (amount >= 0 && amountController.text.isNotEmpty && description.isNotEmpty) {
                 expenseController.addExpense(amount, description);
                 Get.back();
                 Get.snackbar('Success', 'Expense added successfully!');

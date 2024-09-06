@@ -56,7 +56,7 @@ class AddIncomeScreen extends StatelessWidget {
               String source = sourceController.text;
               String description = descriptionController.text;
 
-              if (amount > 0 && source.isNotEmpty && description.isNotEmpty && amountController.text.isNotEmpty) {
+              if (amount >=0 && source.isNotEmpty && description.isNotEmpty && amountController.text.isNotEmpty) {
                 incomeController.addIncome(amount, source, description);
                 Get.back();
                 Get.snackbar('Success', 'Income added successfully!');

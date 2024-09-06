@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../const/app_colors.dart';
 
 Widget customFormField(
-    keyboardtype,
-    controller,
-    context,
-    hinttext,
-    validator, {
-      bool obscureText = false,
-      prefixIcon,
-      readOnly = false,
-    }) {
+  keyboardtype,
+  controller,
+  context,
+  hinttext,
+  validator, {
+  prefixIcon,
+  readOnly = false,
+  RxBool? isObscure,
+  count = 0,
+  VoidCallback? onSuffixIconPressed,
+}) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 10),
     child: TextFormField(
@@ -22,7 +25,8 @@ Widget customFormField(
         fontWeight: FontWeight.w500,
       ),
       controller: controller,
-      obscureText: obscureText,
+      obscureText: isObscure?.value ?? false,
+      // Use observable state for obscureText
       textInputAction: TextInputAction.next,
       validator: validator,
       decoration: InputDecoration(
@@ -46,9 +50,21 @@ Widget customFormField(
             ),
           ),
         ),
+        suffixIcon: count == 1
+            ? IconButton(
+                icon: Icon(
+                  size: 18,
+                  isObscure?.value ?? false
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                ),
+                onPressed: onSuffixIconPressed,
+              )
+            : null,
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none),
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide.none,
+        ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.transparent),
           borderRadius: BorderRadius.circular(8),

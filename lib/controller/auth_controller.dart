@@ -26,13 +26,12 @@ class AuthController extends GetxController {
 
         Map user = {'uid': credential.user!.uid, 'email': email, 'name': name};
         box.write('user', user);
-        print(box.read('user'));
-        Get.back(); // Close the progress dialog
+        Get.back();
         Get.offAndToNamed(homescreen);
         Get.showSnackbar(AppStyles().successSnacBar('SignUp successful'));
       }
     } on FirebaseAuthException catch (e) {
-      Get.back(); // Close the progress dialog
+      Get.back();
       if (e.code == 'weak-password') {
         Get.showSnackbar(
             AppStyles().failedSnacBar('The password provided is too weak.'));
@@ -43,7 +42,7 @@ class AuthController extends GetxController {
         Get.showSnackbar(AppStyles().failedSnacBar(e.message ?? 'Unknown error'));
       }
     } catch (e) {
-      Get.back(); // Close the progress dialog
+      Get.back();
       Get.showSnackbar(AppStyles().failedSnacBar(e.toString()));
     }
   }
@@ -60,7 +59,6 @@ class AuthController extends GetxController {
             .then((DocumentSnapshot<Map<String, dynamic>> doc) {
           if (doc.exists) {
             var data = doc.data();
-            print(data);
             Map user = {
               'uid': data!['uid'],
               'email': data['email'],
@@ -71,7 +69,7 @@ class AuthController extends GetxController {
             Get.offAndToNamed(homescreen);
             Get.showSnackbar(AppStyles().successSnacBar('Login successful'));
           } else {
-            Get.back(); // Close the progress dialog
+            Get.back();
             Get.showSnackbar(AppStyles()
                 .failedSnacBar('Document does not exist in the database.'));
           }
@@ -111,7 +109,7 @@ class AuthController extends GetxController {
     Get.offAllNamed(loginscreen);
 
   }
-  RxBool obscureText = true.obs;
+  var obscureText = true.obs;
   void toggleObscureText() {
     obscureText.value = !obscureText.value;
   }
