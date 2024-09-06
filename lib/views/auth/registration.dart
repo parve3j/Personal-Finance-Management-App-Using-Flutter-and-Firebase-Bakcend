@@ -55,7 +55,7 @@ class Registration extends StatelessWidget {
                       return 'This field can\'t be empty';
                     }
                     if (!val.contains(RegExp(r'\@'))) {
-                      return 'enter a valid email address';
+                      return 'Enter a valid email address';
                     }
                   }, prefixIcon: Icons.email_outlined),
                   Obx(() => customFormField(
@@ -65,7 +65,7 @@ class Registration extends StatelessWidget {
                         'Password',
                         (val) {
                           if (val!.isEmpty) {
-                            return 'This field can\'t be empty';
+                            return 'Set password at least 6 characters';
                           }
                           return null;
                         },
