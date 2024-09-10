@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../utils/responsive/size_config.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_text_fields.dart';
 import '../../controller/auth_controller.dart';
-import '../../utils/responsive/size_config.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text_fields.dart';
 
-
-class ForgetPassword extends StatelessWidget {
-  ForgetPassword({super.key});
-  TextEditingController _emailController = TextEditingController();
+class ForgetPasswordScreen extends StatelessWidget {
+  ForgetPasswordScreen({super.key});
+  final AuthController _authController = Get.find();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -37,7 +37,7 @@ class ForgetPassword extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      customFormField(TextInputType.emailAddress, _emailController,
+                      customFormField(TextInputType.emailAddress, _authController.emailController,
                           context, 'Email', (val) {
                             if (val.isEmpty) {
                               return 'this field can\'t be empty';
@@ -57,10 +57,10 @@ class ForgetPassword extends StatelessWidget {
                                 () {
                                   if (_formKey.currentState!.validate()) {
                                     Get.find<AuthController>().forgetPassword(
-                                        _emailController.text.trim(), context);
-                                  } else {
-                                    print('failed');
+                                        _authController.emailController.text.trim(), context);
                                   }
+                                  _authController.emailController.clear();
+
                             },
                           )),
                     ],

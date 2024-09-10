@@ -2,19 +2,17 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:personal_finance_management_app/routes/routes.dart';
-import '../../const/app_colors.dart';
+
+import '../../../const/app_colors.dart';
+import '../../../utils/responsive/size_config.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_text_fields.dart';
 import '../../controller/auth_controller.dart';
-import '../../utils/responsive/size_config.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text_fields.dart';
 
-class Registration extends StatelessWidget {
-  Registration({super.key});
 
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  AuthController _authController = Get.find();
+class RegistrationScreen extends StatelessWidget {
+  RegistrationScreen({super.key});
+  final AuthController _authController = Get.find();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -43,13 +41,13 @@ class Registration extends StatelessWidget {
                     height: 20,
                   ),
                   customFormField(
-                      TextInputType.text, _nameController, context, 'Name',
+                      TextInputType.text, _authController.nameController, context, 'Name',
                       (val) {
                     if (val.isEmpty) {
                       return 'This field can\'t be empty';
                     }
                   }, prefixIcon: Icons.person_2_outlined),
-                  customFormField(TextInputType.emailAddress, _emailController,
+                  customFormField(TextInputType.emailAddress, _authController.emailController,
                       context, 'Email', (val) {
                     if (val.isEmpty) {
                       return 'This field can\'t be empty';
@@ -60,7 +58,7 @@ class Registration extends StatelessWidget {
                   }, prefixIcon: Icons.email_outlined),
                   Obx(() => customFormField(
                         TextInputType.text,
-                        _passwordController,
+                        _authController.passwordController,
                         context,
                         'Password',
                         (val) {
@@ -85,12 +83,10 @@ class Registration extends StatelessWidget {
                         () {
                           if (_formKey.currentState!.validate()) {
                             Get.find<AuthController>().signUp(
-                                _nameController.text,
-                                _emailController.text.trim(),
-                                _passwordController.text.trim(),
+                                _authController.nameController.text,
+                                _authController.emailController.text.trim(),
+                                _authController.passwordController.text.trim(),
                                 context);
-                          } else {
-                            print('failed');
                           }
                         },
                       )),

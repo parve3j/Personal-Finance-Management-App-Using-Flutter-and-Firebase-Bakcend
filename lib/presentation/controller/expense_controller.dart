@@ -1,10 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../model/expense.dart';
+import '../../model/expense_model.dart';
 
 class ExpenseController extends GetxController {
+  final TextEditingController amountController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  @override
+  void dispose() {
+    amountController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
   var expenses = <Expense>[].obs;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 

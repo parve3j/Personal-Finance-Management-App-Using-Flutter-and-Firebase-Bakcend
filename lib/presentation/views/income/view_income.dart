@@ -5,6 +5,7 @@ import 'package:personal_finance_management_app/const/app_colors.dart';
 
 import '../../controller/income_controller.dart';
 
+
 class ViewIncomesScreen extends StatelessWidget {
   final IncomeController incomeController = Get.find();
 

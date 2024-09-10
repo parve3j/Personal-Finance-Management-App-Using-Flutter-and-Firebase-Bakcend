@@ -1,19 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../const/app_colors.dart';
+
+import '../../../const/app_colors.dart';
+import '../../../routes/routes.dart';
+import '../../../utils/responsive/size_config.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_text_fields.dart';
 import '../../controller/auth_controller.dart';
-import '../../routes/routes.dart';
-import '../../utils/responsive/size_config.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text_fields.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  AuthController _authController = Get.find();
+  final AuthController _authController = Get.find();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -41,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  customFormField(TextInputType.emailAddress, _emailController,
+                  customFormField(TextInputType.emailAddress, _authController.emailController,
                       context, 'Email', (value) {
                     if (value.isEmpty) {
                       return 'This field can\'t be empty';
@@ -52,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                   }, prefixIcon: Icons.email_outlined),
                   Obx(() => customFormField(
                         TextInputType.text,
-                        _passwordController,
+                        _authController.passwordController,
                         context,
                         'Password',
                         (val) {
@@ -88,8 +86,8 @@ class LoginScreen extends StatelessWidget {
                         () {
                           if (_formKey.currentState!.validate()) {
                             Get.find<AuthController>().login(
-                                _emailController.text.trim(),
-                                _passwordController.text.trim(),
+                                _authController.emailController.text.trim(),
+                                _authController.passwordController.text.trim(),
                                 context);
                           }
                         },

@@ -1,10 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../model/income.dart';
+import '../../model/income_model.dart';
 
 class IncomeController extends GetxController {
+  final TextEditingController amountController = TextEditingController();
+  final TextEditingController sourceController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  @override
+  void dispose() {
+    amountController.dispose();
+    sourceController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
   var incomes = <Income>[].obs;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
